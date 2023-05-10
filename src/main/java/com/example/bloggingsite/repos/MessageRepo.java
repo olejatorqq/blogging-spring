@@ -10,10 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Repository
+
 public interface MessageRepo extends CrudRepository<Message, Long> {
     List<Message> findByTag(String tag);
-
-    @Override
-    Iterable<Message> findAll();
 }
