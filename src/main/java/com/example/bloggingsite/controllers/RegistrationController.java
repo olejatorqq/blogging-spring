@@ -2,21 +2,22 @@ package com.example.bloggingsite.controllers;
 
 import com.example.bloggingsite.domain.Role;
 import com.example.bloggingsite.domain.User;
-import com.example.bloggingsite.repos.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.bloggingsite.repos.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
 
 @Controller
 public class RegistrationController {
 
-    @Autowired
-    private UserRepo userRepo;
+    private final UserRepository userRepo;
+
+    public RegistrationController(UserRepository userRepo) {
+        this.userRepo = userRepo;
+    }
 
     @GetMapping("/registration")
     public String registration(){

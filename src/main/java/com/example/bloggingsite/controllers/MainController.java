@@ -1,7 +1,9 @@
 package com.example.bloggingsite.controllers;
 
 import com.example.bloggingsite.domain.Message;
-import com.example.bloggingsite.repos.MessageRepo;
+import com.example.bloggingsite.domain.User;
+import com.example.bloggingsite.repos.MessageRepository;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/")
 public class MainController {
 
-    private final MessageRepo messageRepo;
+    private final MessageRepository messageRepository;
 
-    public MainController(MessageRepo messageRepo) {
-        this.messageRepo = messageRepo;
+    public MainController(MessageRepository messageRepository) {
+        this.messageRepository = messageRepository;
     }
 
     @GetMapping
@@ -26,19 +28,21 @@ public class MainController {
 
     @GetMapping("/home")
     public String home(Model model) {
-        model.addAttribute("messages", messageRepo.findAll());
+        model.addAttribute("messages", messageRepository.findAll());
         return "home";
     }
 
     @PostMapping("/home")
-    public String add(@RequestParam String text,
+    public String add(@AuthenticationPrincipal User user,
+                      @RequestParam String text,
                       @RequestParam String tag,
                       Model model) {
 
-        Message message = new Message(text, tag);
-        messageRepo.save(message);
+        Message message = new Message(text, tag, user);
+        messageRepository.save(message);
 
-        Iterable<Message> messages = messageRepo.findAll();
+        Iterable<Message> messages = messageRepository.findAll();
+
         model.addAttribute("messages", messages);
 
         return "home";
@@ -49,9 +53,9 @@ public class MainController {
                          Model model){
         Iterable<Message> messages;
         if (filter != null && !filter.isEmpty()){
-            messages = messageRepo.findByTag(filter);
+            messages = messageRepository.findByTag(filter);
         } else {
-            messages = messageRepo.findAll();
+            messages = messageRepository.findAll();
         }
         model.addAttribute("messages", messages);
         return "home";
