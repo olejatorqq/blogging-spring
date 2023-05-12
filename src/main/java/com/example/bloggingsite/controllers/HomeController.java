@@ -13,22 +13,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/")
-public class MainController {
+public class HomeController {
 
     private final MessageRepository messageRepository;
 
-    public MainController(MessageRepository messageRepository) {
+    public HomeController(MessageRepository messageRepository) {
         this.messageRepository = messageRepository;
     }
 
     @GetMapping
-    public String greeting(Model model) {
+    public String greeting() {
         return "greeting";
     }
 
     @GetMapping("/home")
-    public String home(Model model) {
-        model.addAttribute("messages", messageRepository.findAll());
+    public String home(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
+        Iterable<Message> messages;
+
+        if (filter != null && !filter.isEmpty()) {
+            messages = messageRepository.findByTag(filter);
+        } else {
+            messages = messageRepository.findAll();
+        }
+
+        model.addAttribute("messages", messages);
+        model.addAttribute("filter", filter);
+
         return "home";
     }
 
@@ -45,19 +55,7 @@ public class MainController {
 
         model.addAttribute("messages", messages);
 
-        return "home";
+        return "redirect:/home";
     }
 
-    @PostMapping("filter")
-    public String filter(@RequestParam String filter,
-                         Model model){
-        Iterable<Message> messages;
-        if (filter != null && !filter.isEmpty()){
-            messages = messageRepository.findByTag(filter);
-        } else {
-            messages = messageRepository.findAll();
-        }
-        model.addAttribute("messages", messages);
-        return "home";
-    }
 }
