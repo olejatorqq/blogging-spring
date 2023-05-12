@@ -5,5 +5,6 @@
     <strong>Add new user</strong>
     ${message!}
     <@login.login "/registration" />
+    <a href="/login">Login</a>
 
 </@common.page>
