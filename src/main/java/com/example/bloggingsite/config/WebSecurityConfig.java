@@ -23,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/", "/registration", "/static/**").permitAll() // Permit all requests (Need for word by path without authorization)
+                    .antMatchers("/", "/registration", "/static/**", "activate/*").permitAll() // Permit all requests (Need for word by path without authorization)
                     .anyRequest().authenticated()   // Authorization for any requests
                 .and()
                     .formLogin()
