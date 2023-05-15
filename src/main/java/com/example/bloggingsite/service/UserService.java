@@ -30,6 +30,7 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean addUser(User user) {
+
         User userFromDb = userRepository.findByUsername(user.getUsername());
 
         if (userFromDb != null) {
@@ -42,14 +43,13 @@ public class UserService implements UserDetailsService {
 
         userRepository.save(user);
 
-        if (!StringUtils.isEmpty(user.getEmail())) {
+        if (StringUtils.hasText(user.getEmail())) {
             String message = String.format(
                     "Hello, %s! \n" +
-                            "Welcome to Sweater. Please, visit next link: http://localhost:8080/activate/%s",
+                            "Welcome to Blogging site! Please, visit next link: http://localhost:8080/activate/%s",
                     user.getUsername(),
                     user.getActivationCode()
             );
-
             mailSender.send(user.getEmail(), "Activation code", message);
         }
 

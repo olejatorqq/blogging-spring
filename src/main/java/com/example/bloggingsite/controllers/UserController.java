@@ -52,9 +52,7 @@ public class UserController {
         user.getRoles().clear();
 
         for (String key : form.keySet()){
-            System.out.println(key);
             if (roles.contains(key)){
-                System.out.println("Зашел");
                 user.getRoles().add(Role.valueOf(key));
             }
         }
