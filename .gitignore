@@ -1,5 +1,6 @@
 HELP.md
 target/
+uploads/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
@@ -18,7 +19,6 @@ target/
 *.iws
 *.iml
 *.ipr
-/uploads
 
 ### NetBeans ###
 /nbproject/private/
@@ -32,3 +32,4 @@ build/
 
 ### VS Code ###
 .vscode/
+!/uploads/
