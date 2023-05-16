@@ -1,7 +1,11 @@
 package com.example.bloggingsite.domain;
 
 
+import com.sun.istack.NotNull;
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="message")
@@ -9,6 +13,8 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NotBlank(message ="Error: Fill the message")
+    @Length(max = 2048, message = "Error: Message too long") // From migration 2048
     private String text;
     private String tag;
     @ManyToOne(fetch = FetchType.EAGER)
