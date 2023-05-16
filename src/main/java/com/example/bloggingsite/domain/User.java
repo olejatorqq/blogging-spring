@@ -25,9 +25,6 @@ public class User implements UserDetails {
     @NotBlank(message="Error: Email can`t be empty")
     private String email;
 
-    @Transient
-    @NotBlank(message="Error: Password confirmation can`t be empty")
-    private String password2;
     private String activationCode;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
@@ -120,11 +117,4 @@ public class User implements UserDetails {
         this.activationCode = activationCode;
     }
 
-    public String getPassword2() {
-        return password2;
-    }
-
-    public void setPassword2(String password2) {
-        this.password2 = password2;
-    }
 }
