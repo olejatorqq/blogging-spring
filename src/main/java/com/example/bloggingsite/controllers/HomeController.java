@@ -79,6 +79,9 @@ public class HomeController {
                 file.transferTo(new File(uploadPath + "/" + resultFilename));
                 message.setFilename(resultFilename);
             }
+
+            model.addAttribute("message", null);
+
             messageRepository.save(message);
         }
 
@@ -86,7 +89,7 @@ public class HomeController {
 
         model.addAttribute("messages", messages);
 
-        return "redirect:/home";
+        return "/home";
     }
 
 }

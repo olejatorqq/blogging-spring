@@ -16,6 +16,9 @@ public class Message {
     @NotBlank(message ="Error: Fill the message")
     @Length(max = 2048, message = "Error: Message too long") // From migration 2048
     private String text;
+
+    @Length(max = 255, message = "Error: Tag too long") // From migration 2048
+
     private String tag;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
